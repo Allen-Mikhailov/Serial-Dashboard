@@ -22,7 +22,7 @@
     "noUnusedParameters": false,
     "erasableSyntaxOnly": true,
     "noFallthroughCasesInSwitch": true,
-    "noUncheckedSideEffectImports": true
+    "noUncheckedSideEffectImports": true,
 	"baseUrl": ".",
 	"paths": {
       "@shared/*": ["../shared-types/src/*"] // Set up alias

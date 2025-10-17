@@ -17,4 +17,6 @@ interface ConfigFile {
 	}};
 }
 
-export { ListenerData, ConfigFile }
+type StreamData = [any]
+
+export { ListenerData, ConfigFile, StreamData }

@@ -1,10 +1,13 @@
 import { useState, useEffect } from 'react'
 import type { ListenerData, ConfigFile } from "@shared/index"
+import { recentDataState } from './states';
 import './App.css'
+import TopBar from './components/TopBar';
 
 function App() {
 	const [configData, setConfigData] = useState<ConfigFile>();
 	const [uuid, setUuid] = useState<string>("");
+	const [recentData, setRecentData] = recentDataState.useState();
 
 	useEffect(() => {
 		// Generating UUID to use for communication
@@ -24,6 +27,10 @@ function App() {
 		// Setting the timeout
 		const fetchInterval = setInterval(() => {
 			fetch(`/get?client_id=${uuid}`)
+				.then(data => data.json())
+				.then((jsonData: ListenerData) => {
+				setRecentData(jsonData);	
+			});
 		}, 1000); // Calls every second
 
 		return () => {
@@ -35,6 +42,7 @@ function App() {
 	
   return (
     <>
+		<TopBar/>
     </>
   )
 }
