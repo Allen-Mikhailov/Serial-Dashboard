@@ -22,21 +22,27 @@ function App() {
 				throw new Error(`HTTP error! status: ${response.status}`);
 			}
 			return response.json(); // Or .text(), .blob(), etc.
-		}).then(data => setConfigData(data));
+		}).then(data => {
+			setConfigData(data)
+			console.log("Recieved config data", data);
+		});
 
 		// Setting the timeout
 		const fetchInterval = setInterval(() => {
+			console.log("Fetching");
 			fetch(`/get?client_id=${uuid}`)
-				.then(data => data.json())
+				.then(data => data.json()
 				.then((jsonData: ListenerData) => {
+				console.log("recent data", recentData);
 				setRecentData(jsonData);	
-			});
+			}));
 		}, 1000); // Calls every second
 
 		return () => {
 			clearInterval(fetchInterval);
 		}
 	}, []);
+
 
 
 	
