@@ -68,13 +68,14 @@ const hostServer: http.Server = http.createServer((req, res) => {
 			switch (channelSettings.type) {
 				case "stream":
 					packet[key] = JSON.parse(JSON.stringify(channelData));
+					client_pickup_data[clientId][key] = [];	
 					break;
 			}
 
 		});
 
 		const postString = JSON.stringify(packet);
-		console.log("Sending", packet);
+		console.log("Sending", postString);
 		res.writeHead(200, { 'Content-Type': "application/json", "Content-Length":  Buffer.byteLength(postString)});
 		res.write(postString);
 		return res.end();
@@ -107,7 +108,6 @@ const hostServer: http.Server = http.createServer((req, res) => {
 
 function addData(data: ListenerData)
 {
-	console.log("Got data", data);
 	Object.keys(data.data).map((key: string) => {
 		const channelData = data.data[key];
 		const channelConfig = configJSON.data_channels[key]

@@ -21,6 +21,7 @@ function App() {
 			if (!response.ok) {
 				throw new Error(`HTTP error! status: ${response.status}`);
 			}
+			
 			return response.json(); // Or .text(), .blob(), etc.
 		}).then(data => {
 			setConfigData(data)
@@ -30,12 +31,13 @@ function App() {
 		// Setting the timeout
 		const fetchInterval = setInterval(() => {
 			console.log("Fetching");
-			fetch(`/get?client_id=${uuid}`)
-				.then(data => data.json()
-				.then((jsonData: ListenerData) => {
-				console.log("recent data", recentData);
+			fetch(`/get?client_id=${uuid}`).then(data => {
+				return data.text()
+			}).then((jsonString: string) => {
+				const jsonData: ListenerData = JSON.parse(jsonString);
+				console.log("recent data", jsonData);
 				setRecentData(jsonData);	
-			}));
+			});
 		}, 1000); // Calls every second
 
 		return () => {
