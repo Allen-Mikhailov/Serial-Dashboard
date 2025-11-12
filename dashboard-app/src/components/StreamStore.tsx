@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
-import { recentDataState } from "src/states";
+import { recentDataState } from "../states";
 
-function StreamStore({channel, data, setData}: {channel: string, data: [any], setData: any})
+function StreamStore({channel, data, setData}: {channel: string, data: number[], setData: any})
 {
 	const [recentData] = recentDataState.useState();
 	useEffect(() => {

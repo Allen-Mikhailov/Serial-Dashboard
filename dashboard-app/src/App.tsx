@@ -4,6 +4,8 @@ import { recentDataState } from './states';
 import './App.css'
 import TopBar from './components/TopBar';
 
+import BasicGraph from './examples/BasicGraph.tsx';
+
 function App() {
 	const [configData, setConfigData] = useState<ConfigFile>();
 	const [uuid, setUuid] = useState<string>("");
@@ -51,6 +53,7 @@ function App() {
   return (
     <>
 		<TopBar/>
+		<BasicGraph/>
     </>
   )
 }

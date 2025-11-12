@@ -50,7 +50,9 @@ const hostServer: http.Server = http.createServer((req, res) => {
 	console.log("parsed url", parsedUrl.pathname)
 	if (parsedUrl.pathname == "/get")
 	{
-		const packet: {[key:string]: any} = {};
+		const packet: ListenerData = {
+			data: {}
+		};
 
 		const clientId = parsedUrl.searchParams.get('client_id');
 		if (clientId == null) {
@@ -67,7 +69,7 @@ const hostServer: http.Server = http.createServer((req, res) => {
 
 			switch (channelSettings.type) {
 				case "stream":
-					packet[key] = JSON.parse(JSON.stringify(channelData));
+					packet.data[key] = JSON.parse(JSON.stringify(channelData));
 					client_pickup_data[clientId][key] = [];	
 					break;
 			}
@@ -76,6 +78,7 @@ const hostServer: http.Server = http.createServer((req, res) => {
 
 		const postString = JSON.stringify(packet);
 		console.log("Sending", postString);
+		console.log("Packet", packet);
 		res.writeHead(200, { 'Content-Type': "application/json", "Content-Length":  Buffer.byteLength(postString)});
 		res.write(postString);
 		return res.end();
